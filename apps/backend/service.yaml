@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: health-monitor-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: health-monitor-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-monitor-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: health-monitor-backend
+  template:
+    metadata:
+      labels:
+        app: health-monitor-backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/dileephl/service-health-monitor-backend:d965b05e6c62667ae7a0f1590f8e077c31bca963
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: APP_VERSION
+              value: "d965b05e6c62667ae7a0f1590f8e077c31bca963"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-Xms64m -Xmx256m"
+            - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
+              value: "true"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 5
+            failureThreshold: 36
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 10
