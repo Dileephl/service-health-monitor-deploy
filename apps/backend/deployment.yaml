@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/dileephl/service-health-monitor-backend:d965b05e6c62667ae7a0f1590f8e077c31bca963
+          image: ghcr.io/dileephl/service-health-monitor-backend:32441555566b121a298a3837fdfb0756d86b8e26
           ports:
             - name: http
               containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "d965b05e6c62667ae7a0f1590f8e077c31bca963"
+              value: "32441555566b121a298a3837fdfb0756d86b8e26"
             - name: JAVA_TOOL_OPTIONS
               value: "-Xms64m -Xmx256m"
             - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
